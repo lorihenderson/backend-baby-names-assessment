@@ -30,7 +30,7 @@ Suggested milestones for incremental development:
  - Build the [year, 'name rank', ... ] list and print it
  - Fix main() to use the extracted_names list
 """
-
+__author__ = "Lori Henderson and Albina"
 import sys
 import re
 import argparse
@@ -43,9 +43,24 @@ def extract_names(filename):
     the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', 'Aaron 57', 'Abagail 895', ...]
     """
-    names = []
-    # +++your code here+++
-    return names
+    name_list = []
+    names_dict = {}
+    with open (filename) as f:
+        contents = f.read()
+        year_match = re.search(r'Popularity\sin\s(\d+)', contents)
+        year = year_match.group(1)
+        name_list.append(year)
+
+        rank_names = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', contents)
+        # print(rank_names)
+        for name in rank_names:
+            if name[1] not in names_dict:
+                names_dict[name[1]] = name[0]
+            if name[2] not in names_dict:
+                names_dict[name[2]] = name[0]
+        for key in sorted(names_dict):
+            name_list.append(key + " " + names_dict[key])
+    return name_list
 
 
 def create_parser():
@@ -82,8 +97,15 @@ def main(args):
     # Use the create_summary flag to decide whether to print the list
     # or to write the list to a summary file (e.g. `baby1990.html.summary`).
 
-    # +++your code here+++
+    for each in file_list:
+        each_file = extract_names(each)
+        each_file = "\n".join(each_file)
 
-
+        if not create_summary:
+            print(each_file)
+        else:
+            new_files = each + ".summary"
+            f = open(new_files, "w")
+            f.write(str(each_file))
 if __name__ == '__main__':
     main(sys.argv[1:])

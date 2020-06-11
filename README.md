@@ -3,6 +3,7 @@
 Baby Names 
 ------------
 
+
 The Social Security administration has this neat data of which names are most popular for babies born each year in the USA (see [social security baby names](http://www.socialsecurity.gov/OACT/babynames/)). The files `baby1990.html`, `baby1992.html`, ... contain raw HTML, similar to what you get when visiting the above social security site. Take a look at the HTML and think about how you might scrape the data out of it.
 
 You will need to add your own code to [babynames.py](./babynames.py) to complete this assignment.
